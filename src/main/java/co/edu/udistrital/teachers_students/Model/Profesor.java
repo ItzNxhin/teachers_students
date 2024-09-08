@@ -7,10 +7,6 @@ public class Profesor extends Persona{
 
     private int puntosSalariales;
 
-    public Profesor(int i, String string, String string2){
-
-    }
-
     public Profesor(String nombre, String id, int edad, String facultad, int psalarios) {
         super(nombre, id, edad, facultad);
         this.puntosSalariales = psalarios;
