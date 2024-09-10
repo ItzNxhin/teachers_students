@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Aplicación</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <!-- Título principal -->
+    <h1 class="main-title">Bienvenido al Gestor de Estudiantes y Profesores</h1>
+
+    <header>
+        <img src="images/logo.png" alt="Logo" id="logo">
+        <nav>
+            <ul>
+                <li><button id="estudiantesBtn">Estudiantes</button></li>
+                <li><button id="profesoresBtn">Profesores</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenedor para el menú de estudiantes -->
+    <div class="menu-container">
+        <div id="menu-estudiantes" class="menu" style="display:none;">
+            <button id="crearEstudianteBtn">Crear Estudiante</button>
+            <button id="actualizarEstudianteBtn">Actualizar Estudiante</button>
+            <button id="buscarEstudianteBtn">Buscar Estudiante</button>
+            <button id="borrarEstudianteBtn">Borrar Estudiante</button>
+        </div>
+    </div>
+
+    <!-- Contenedor para el menú de profesores -->
+    <div class="menu-container">
+        <div id="menu-profesores" class="menu" style="display:none;">
+            <button id="crearProfesorBtn">Crear Profesor</button>
+            <button id="actualizarProfesorBtn">Actualizar Profesor</button>
+            <button id="buscarProfesorBtn">Buscar Profesor</button>
+            <button id="borrarProfesorBtn">Borrar Profesor</button>
+        </div>
+    </div>
+
+
+    <div id="menu-crear-estudiante" class="menu-section" style="display:none;">
+        <h2>Menú Crear Estudiante</h2>
+
+        <form id="form-crear-estudiante">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="facultad">Facultad:</label>
+            <input type="text" id="facultad" name="facultad" required><br><br>
+
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" required><br><br>
+
+            <label for="promedio">Promedio:</label>
+            <input type="number" id="promedio" name="promedio" step="0.01" required><br><br>
+
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required><br><br>
+
+            <button type="submit">Crear Estudiante</button>
+        </form>
+    </div>
+
+
+    <div id="menu-actualizar-estudiante" class="menu-section" style="display:none;">
+        <h2>Menú Actualizar Estudiante</h2>
+
+        <!-- Formulario para ingresar ID del estudiante a actualizar -->
+        <form id="form-buscar-estudiante">
+            <label for="id-buscar-estudiante">ID del Estudiante:</label>
+            <input type="text" id="id-buscar-estudiante" name="id" required>
+            <button type="submit">Buscar Estudiante</button>
+        </form>
+
+        <!-- Formulario para actualizar estudiante -->
+        <form id="form-actualizar-estudiante" style="display:none;">
+            <label for="nombre-estudiante">Nombre:</label>
+            <input type="text" id="nombre-estudiante" name="nombre" required><br><br>
+
+            <label for="facultad-estudiante">Facultad:</label>
+            <input type="text" id="facultad-estudiante" name="facultad" required><br><br>
+
+            <label for="edad-estudiante">Edad:</label>
+            <input type="number" id="edad-estudiante" name="edad" required><br><br>
+
+            <label for="promedio-estudiante">Promedio:</label>
+            <input type="number" step="0.1" id="promedio-estudiante" name="promedio" required><br><br>
+
+            <button type="submit">Actualizar Estudiante</button>
+        </form>
+
+        <!-- Mensaje de error si no se encuentra el estudiante -->
+        <div id="mensaje-error" style="display:none; color: red;">
+            <p>Estudiante no encontrado.</p>
+        </div>
+    </div>
+
+
+    <!-- Formulario para buscar estudiante -->
+    <div id="menu-buscar-estudiante" class="menu-section" style="display:none;">
+        <h2>Buscar Estudiante</h2>
+        <form id="form-buscar-estudiante">
+            <label for="id-buscar-estudiante">ID del Estudiante:</label>
+            <input type="text" id="id-buscar-estudiante" name="id" required>
+            <button type="submit">Buscar</button>
+        </form>
+        <div id="resultado-busqueda-estudiante" style="display:none;">
+            <h3>Detalles del Estudiante</h3>
+            <p id="resultado-nombre"></p>
+            <p id="resultado-facultad"></p>
+            <p id="resultado-edad"></p>
+            <p id="resultado-promedio"></p>
+        </div>
+        <p id="mensaje-error-estudiante" style="display:none; color: red;">Estudiante no encontrado.</p>
+    </div>
+
+
+
+    <div id="menu-borrar-estudiante" class="menu-section" style="display:none;">
+        <h2>Menú Borrar Estudiante</h2>
+    </div>
+
+    <div id="menu-crear-profesor" class="menu-section" style="display:none;">
+        <h2>Menú Crear Profesor</h2>
+
+        <form id="form-crear-profesor">
+            <label for="nombre-profesor">Nombre:</label>
+            <input type="text" id="nombre-profesor" name="nombre" required><br><br>
+
+            <label for="facultad-profesor">Facultad:</label>
+            <input type="text" id="facultad-profesor" name="facultad" required><br><br>
+
+            <label for="puntos-salariales">Puntos Salariales:</label>
+            <input type="number" id="puntos-salariales" name="puntos-salariales" required><br><br>
+
+            <label for="edad-profesor">Edad:</label>
+            <input type="number" id="edad-profesor" name="edad" required><br><br>
+
+            <label for="id-profesor">ID:</label>
+            <input type="text" id="id-profesor" name="id" required><br><br>
+
+            <button type="submit">Crear Profesor</button>
+        </form>
+    </div>
+
+
+    <div id="menu-actualizar-profesor" class="menu-section" style="display:none;">
+        <h2>Menú Actualizar Profesor</h2>
+
+        <!-- Formulario para ingresar ID del profesor a actualizar -->
+        <form id="form-buscar-profesor">
+            <label for="id-buscar-profesor">ID del Profesor:</label>
+            <input type="text" id="id-buscar-profesor" name="id" required>
+            <button type="submit">Buscar Profesor</button>
+        </form>
+
+        <!-- Formulario para actualizar profesor -->
+        <form id="form-actualizar-profesor" style="display:none;">
+            <label for="nombre-profesor">Nombre:</label>
+            <input type="text" id="nombre-profesor" name="nombre" required><br><br>
+
+            <label for="facultad-profesor">Facultad:</label>
+            <input type="text" id="facultad-profesor" name="facultad" required><br><br>
+
+            <label for="puntos-salariales-profesor">Puntos Salariales:</label>
+            <input type="number" id="puntos-salariales-profesor" name="puntosSalariales" required><br><br>
+
+            <label for="edad-profesor">Edad:</label>
+            <input type="number" id="edad-profesor" name="edad" required><br><br>
+
+            <button type="submit">Actualizar Profesor</button>
+        </form>
+
+        <!-- Mensaje de error si no se encuentra el profesor -->
+        <div id="mensaje-error-profesor" style="display:none; color: red;">
+            <p>Profesor no encontrado.</p>
+        </div>
+    </div>
+
+
+<!-- Menú de búsqueda de profesores -->
+<div id="menu-buscar-profesor-datos" class="menu-section" style="display: none;">
+    <h2>Buscar Profesor</h2>
+    <form id="form-buscar-profesor-datos">
+        <label for="id-buscar-profesor-datos">ID del Profesor:</label>
+        <input type="text" id="id-buscar-profesor-datos" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div id="resultado-busqueda-profesor" style="display: none;">
+        <p id="resultado-nombre-profesor"></p>
+        <p id="resultado-facultad-profesor"></p>
+        <p id="resultado-puntos-salariales-profesor"></p>
+        <p id="resultado-edad-profesor"></p>
+        <p id="resultado-id-profesor"></p>
+    </div>
+
+    <div id="mensaje-error-buscar-profesor" style="display: none;">
+        <p>Profesor no encontrado.</p>
+    </div>
+</div>
+
+
+
+    <div id="menu-borrar-profesor" class="menu-section" style="display:none;">
+        <h2>Menú Borrar Profesor</h2>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mi Aplicación</p>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
