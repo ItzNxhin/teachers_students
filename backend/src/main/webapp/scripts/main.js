@@ -82,16 +82,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Formulario de crear estudiante
     document.getElementById('form-crear-estudiante').addEventListener('submit', function(e) {
         e.preventDefault();
-        // agregar la lógica para enviar los datos del formulario
-        console.log('Estudiante creado:', {
+        let estudent = {
             nombre: this.nombre.value,
-            facultad: this.facultad.value,
+            id: this.id.valueOf,
             edad: this.edad.value,
-            promedio: this.promedio.value,
-            id: this.id.value
-        });
-        alert('Estudiante creado con éxito.');
-        this.reset();
+            facultad: this.facultad.value,
+            promedio: this.promedio.value
+            
+        }
+        console.log('hola')
+        fetch('http://localhost:8080/backend/Controller', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(estudent) // Convertimos el objeto a JSON
+        })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
     });
 
     // Formulario de actualizar estudiante
