@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         let estudent = {
             nombre: this.nombre.value,
-            id: this.id.valueOf,
+            id: this.id.value,
             edad: this.edad.value,
             facultad: this.facultad.value,
             promedio: this.promedio.value
@@ -142,19 +142,35 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const estudianteId = this.querySelector('input').value;
         console.log('Buscar estudiante con ID:', estudianteId);
-        // Ejemplo de datos encontrados
-        const datosEstudiante = {
-            nombre: 'Juan Pérez',
-            facultad: 'Ingeniería',
-            edad: 21,
-            promedio: 3.7
-        };
-        document.getElementById('resultado-nombre-estudiante').textContent = `Nombre: ${datosEstudiante.nombre}`;
-        document.getElementById('resultado-facultad-estudiante').textContent = `Facultad: ${datosEstudiante.facultad}`;
-        document.getElementById('resultado-edad-estudiante').textContent = `Edad: ${datosEstudiante.edad}`;
-        document.getElementById('resultado-promedio-estudiante').textContent = `Promedio: ${datosEstudiante.promedio}`;
-        document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
-        document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+
+        fetch(`http://localhost:8080/backend/Controller?id=${estudianteId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => {
+            if(!data.exist){
+                console.log("Estudiante no existe")
+                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+            }
+            else{
+                const datosEstudiante = {
+                    nombre: data.nombre,
+                    facultad: data.facultad,
+                    edad: data.edad,
+                    promedio: data.promedio
+                };
+                document.getElementById('resultado-nombre-estudiante').textContent = `Nombre: ${datosEstudiante.nombre}`;
+                document.getElementById('resultado-facultad-estudiante').textContent = `Facultad: ${datosEstudiante.facultad}`;
+                document.getElementById('resultado-edad-estudiante').textContent = `Edad: ${datosEstudiante.edad}`;
+                document.getElementById('resultado-promedio-estudiante').textContent = `Promedio: ${datosEstudiante.promedio}`;
+                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+        }})
+        .catch(error => console.error('Error:', error));
     });
 
     // Formulario de borrar estudiante
