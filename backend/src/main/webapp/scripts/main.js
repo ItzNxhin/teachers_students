@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Función para ocultar todos los formularios y resetear sus campos
     function ocultarTodosLosFormularios() {
         const formularios = [
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Formulario de crear estudiante
-    document.getElementById('form-crear-estudiante').addEventListener('submit', function(e) {
+    document.getElementById('form-crear-estudiante').addEventListener('submit', function (e) {
         e.preventDefault();
         let estudent = {
             edit: false,
@@ -89,162 +89,165 @@ document.addEventListener('DOMContentLoaded', function() {
             edad: this.edad.value,
             facultad: this.facultad.value,
             promedio: this.promedio.value
-            
+
         }
         console.log('hola')
-        fetch('http://localhost:8080/backend/Controller', {
+        fetch('http://localhost:8080/backend/api/controllerEstudiantes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(estudent) // Convertimos el objeto a JSON
         })
-        .then(response => response.json()) // Esperamos la respuesta en formato JSON
-        .then(data => alert(data.message))
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
     });
 
     // Formulario de actualizar estudiante
-    document.getElementById('form-buscar-estudiante-actualizar').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-estudiante-actualizar').addEventListener('submit', function (e) {
         e.preventDefault();
         const estudianteId = this.querySelector('input').value;
         console.log('Buscar estudiante con ID:', estudianteId);
 
-        fetch(`http://localhost:8080/backend/Controller?id=${estudianteId}`, {
+        fetch(`http://localhost:8080/backend/api/controllerEstudiantes?id=${estudianteId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
         })
-        .then(response => response.json()) // Esperamos la respuesta en formato JSON
-        .then(data => {
-            if(!data.exist){
-                this.reset();
-                alert("Estudiante no existe")
-                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
-            }
-            else{
-                const datosEstudiante = {
-                    nombre: data.nombre,
-                    facultad: data.facultad,
-                    edad: data.edad,
-                    promedio: data.promedio
-                };
-                document.getElementById('input-nombre-estudiante-actualizar').value = datosEstudiante.nombre;
-                document.getElementById('input-facultad-estudiante-actualizar').value = datosEstudiante.facultad;
-                document.getElementById('input-edad-estudiante-actualizar').value = datosEstudiante.edad;
-                document.getElementById('input-promedio-estudiante-actualizar').value = datosEstudiante.promedio;
-                document.getElementById('form-actualizar-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-estudiante').style.display = 'none';
-        }})
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => {
+                if (!data.exist) {
+                    this.reset();
+                    alert("Estudiante no existe")
+                    document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+                }
+                else {
+                    const datosEstudiante = {
+                        nombre: data.nombre,
+                        facultad: data.facultad,
+                        edad: data.edad,
+                        promedio: data.promedio
+                    };
+                    document.getElementById('input-nombre-estudiante-actualizar').value = datosEstudiante.nombre;
+                    document.getElementById('input-facultad-estudiante-actualizar').value = datosEstudiante.facultad;
+                    document.getElementById('input-edad-estudiante-actualizar').value = datosEstudiante.edad;
+                    document.getElementById('input-promedio-estudiante-actualizar').value = datosEstudiante.promedio;
+                    document.getElementById('form-actualizar-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-estudiante').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
     });
 
-    document.getElementById('form-actualizar-estudiante').addEventListener('submit', function(e) {
+    document.getElementById('form-actualizar-estudiante').addEventListener('submit', function (e) {
         e.preventDefault();
         let estudent = {
             edit: true,
             nombre: this.nombre.value,
-            id:  document.getElementById('form-buscar-estudiante-actualizar').querySelector('input').value,
+            id: document.getElementById('form-buscar-estudiante-actualizar').querySelector('input').value,
             edad: this.edad.value,
             facultad: this.facultad.value,
             promedio: this.promedio.value
-            
+
         }
         console.log('hola')
-        fetch('http://localhost:8080/backend/Controller', {
+        fetch('http://localhost:8080/backend/api/controllerEstudiantes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(estudent) // Convertimos el objeto a JSON
         })
-        .then(response => response.json()) // Esperamos la respuesta en formato JSON
-        .then(data => alert(data.message))
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => alert(data.message))
+            .catch(error => console.error('Error:', error));
     });
 
     // Formulario de buscar estudiante
-    document.getElementById('form-buscar-estudiante-datos').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-estudiante-datos').addEventListener('submit', function (e) {
         e.preventDefault();
         const estudianteId = this.querySelector('input').value;
         console.log('Buscar estudiante con ID:', estudianteId);
 
-        fetch(`http://localhost:8080/backend/Controller?id=${estudianteId}`, {
+        fetch(`http://localhost:8080/backend/api/controllerEstudiantes?id=${estudianteId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
         })
-        .then(response => response.json()) // Esperamos la respuesta en formato JSON
-        .then(data => {
-            if(!data.exist){
-                alert("Estudiante no existe")
-                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
-            }
-            else{
-                const datosEstudiante = {
-                    nombre: data.nombre,
-                    facultad: data.facultad,
-                    edad: data.edad,
-                    promedio: data.promedio
-                };
-                document.getElementById('resultado-nombre-estudiante').textContent = `Nombre: ${datosEstudiante.nombre}`;
-                document.getElementById('resultado-facultad-estudiante').textContent = `Facultad: ${datosEstudiante.facultad}`;
-                document.getElementById('resultado-edad-estudiante').textContent = `Edad: ${datosEstudiante.edad}`;
-                document.getElementById('resultado-promedio-estudiante').textContent = `Promedio: ${datosEstudiante.promedio}`;
-                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
-        }})
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => {
+                if (!data.exist) {
+                    alert("Estudiante no existe")
+                    document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+                }
+                else {
+                    const datosEstudiante = {
+                        nombre: data.nombre,
+                        facultad: data.facultad,
+                        edad: data.edad,
+                        promedio: data.promedio
+                    };
+                    document.getElementById('resultado-nombre-estudiante').textContent = `Nombre: ${datosEstudiante.nombre}`;
+                    document.getElementById('resultado-facultad-estudiante').textContent = `Facultad: ${datosEstudiante.facultad}`;
+                    document.getElementById('resultado-edad-estudiante').textContent = `Edad: ${datosEstudiante.edad}`;
+                    document.getElementById('resultado-promedio-estudiante').textContent = `Promedio: ${datosEstudiante.promedio}`;
+                    document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error:', error));
     });
 
     // Formulario de borrar estudiante
-    document.getElementById('form-buscar-estudiante-borrar').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-estudiante-borrar').addEventListener('submit', function (e) {
         e.preventDefault();
         const estudianteId = this.querySelector('input').value;
         console.log('Buscar estudiante con ID:', estudianteId);
 
-        fetch(`http://localhost:8080/backend/Controller?id=${estudianteId}`, {
+        fetch(`http://localhost:8080/backend/api/controllerEstudiantes?id=${estudianteId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
         })
-        .then(response => response.json()) // Esperamos la respuesta en formato JSON
-        .then(data => {
-            if(!data.exist){
-                alert("Estudiante no existe")
-                document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
-            }
-            else{
-                const datosEstudiante = {
-                    nombre: data.nombre,
-                    facultad: data.facultad,
-                    edad: data.edad,
-                    promedio: data.promedio
-                };
-                document.getElementById('detalle-nombre-estudiante-borrar').textContent = `Nombre: ${datosEstudiante.nombre}`;
-                document.getElementById('detalle-facultad-estudiante-borrar').textContent = `Facultad: ${datosEstudiante.facultad}`;
-                document.getElementById('detalle-edad-estudiante-borrar').textContent = `Edad: ${datosEstudiante.edad}`;
-                document.getElementById('detalle-promedio-estudiante-borrar').textContent = `Promedio: ${datosEstudiante.promedio}`;
-                document.getElementById('detalles-estudiante').style.display = 'block';
-                document.getElementById('mensaje-error-borrar-estudiante').style.display = 'none';
-        }})
-        
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => {
+                if (!data.exist) {
+                    alert("Estudiante no existe")
+                    document.getElementById('resultado-busqueda-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-buscar-estudiante').style.display = 'none';
+                }
+                else {
+                    const datosEstudiante = {
+                        nombre: data.nombre,
+                        facultad: data.facultad,
+                        edad: data.edad,
+                        promedio: data.promedio
+                    };
+                    document.getElementById('detalle-nombre-estudiante-borrar').textContent = `Nombre: ${datosEstudiante.nombre}`;
+                    document.getElementById('detalle-facultad-estudiante-borrar').textContent = `Facultad: ${datosEstudiante.facultad}`;
+                    document.getElementById('detalle-edad-estudiante-borrar').textContent = `Edad: ${datosEstudiante.edad}`;
+                    document.getElementById('detalle-promedio-estudiante-borrar').textContent = `Promedio: ${datosEstudiante.promedio}`;
+                    document.getElementById('detalles-estudiante').style.display = 'block';
+                    document.getElementById('mensaje-error-borrar-estudiante').style.display = 'none';
+                }
+            })
+
     });
 
-    document.getElementById('btn-confirmar-borrar-estudiante').addEventListener('click', function() {
+    document.getElementById('btn-confirmar-borrar-estudiante').addEventListener('click', function () {
         // Aquí toca agregar la lógica para borrar el estudiante
         alert('Estudiante borrado con éxito.');
         ocultarTodosLosFormularios();
     });
 
     // Menú de crear profesor
-    document.getElementById('form-crear-profesor').addEventListener('submit', function(e) {
+    document.getElementById('form-crear-profesor').addEventListener('submit', function (e) {
         e.preventDefault();
         // agregar la lógica para enviar los datos del formulario
         console.log('Profesor creado:', {
@@ -259,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Formulario de actualizar profesor
-    document.getElementById('form-buscar-profesor-actualizar').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-profesor-actualizar').addEventListener('submit', function (e) {
         e.preventDefault();
         const profesorId = this.id.value;
         console.log('Buscar profesor con ID:', profesorId);
@@ -278,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
     });
 
-    document.getElementById('form-actualizar-profesor').addEventListener('submit', function(e) {
+    document.getElementById('form-actualizar-profesor').addEventListener('submit', function (e) {
         e.preventDefault();
         // agregar la lógica para actualizar los datos del profesor
         console.log('Profesor actualizado:', {
@@ -292,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Formulario de buscar profesor
-    document.getElementById('form-buscar-profesor-datos').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-profesor-datos').addEventListener('submit', function (e) {
         e.preventDefault();
         const profesorId = this.querySelector('input').value;
         console.log('Buscar profesor con ID:', profesorId);
@@ -312,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Formulario de borrar profesor
-    document.getElementById('form-buscar-profesor-borrar').addEventListener('submit', function(e) {
+    document.getElementById('form-buscar-profesor-borrar').addEventListener('submit', function (e) {
         e.preventDefault();
         const profesorId = this.id.value;
         console.log('Buscar profesor para borrar con ID:', profesorId);
@@ -331,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
     });
 
-    document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function() {
+    document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function () {
         // agregar la lógica para borrar el profesor
         alert('Profesor borrado con éxito.');
         ocultarTodosLosFormularios();

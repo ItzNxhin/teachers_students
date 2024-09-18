@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import pack.model.persistence.EstudianteDTO;
 
-@WebServlet("/Controller")
+@WebServlet("/api/controllerEstudiantes")
 public class StudentServlet extends HttpServlet {
 
     @Override
