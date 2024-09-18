@@ -31,6 +31,7 @@ public class GestorEstudiantes  {
     public void create(EstudianteDTO estdto) throws IOException {
         Estudiante estudent = new Estudiante();
         estudent.setNombre(estdto.getNombre());
+        estudent.setFacultad(estdto.getFacultad());
         estudent.setId(estdto.getId());
         estudent.setEdad(estdto.getEdad());
         estudent.setPromedio(estdto.getPromedio());
@@ -40,6 +41,12 @@ public class GestorEstudiantes  {
 
     public EstudianteDTO get(String id){
         return MapHandler.estudianteToDTO(gE.findID(id));
+    }
+
+    public void edit(EstudianteDTO estdto) throws IOException{
+        Estudiante oldE = gE.findID(estdto.getId());
+        Estudiante newE = MapHandler.dTOToEstudiante(estdto);
+        gE.update(oldE, newE);
     }
 
 }
