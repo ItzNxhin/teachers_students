@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import org.json.JSONObject;
 
-import pack.model.persistence.EstudianteDTO;
+import pack.model.persistence.ProfesorDTO;
 
 @WebServlet("/api/controllerProfesores")
 public class TeachersServlet extends HttpServlet {
@@ -19,7 +19,7 @@ public class TeachersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GestorEstudiantes gestion = new GestorEstudiantes();
+        GestorProfesores gestion = new GestorProfesores();
         String message = "";
         // Configura el tipo de contenido de la respuesta
         response.setContentType("application/json");
@@ -45,24 +45,24 @@ public class TeachersServlet extends HttpServlet {
             String id = jsonObject.getString("id");
             int edad = jsonObject.getInt("edad");
             String facultad = jsonObject.getString("facultad");
-            float promedio = jsonObject.getFloat("promedio");
+            int puntos = jsonObject.getInt("puntos");
             // Creacion del DTO
-            EstudianteDTO est = new EstudianteDTO();
+            ProfesorDTO est = new ProfesorDTO();
             est.setNombre(nombre);
             est.setId(id);
             est.setEdad(edad);
             est.setFacultad(facultad);
-            est.setPromedio(promedio);
+            est.setPuntosSalariales(puntos);
             if (edit) {
                 gestion.edit(est);
-                message = "El estudiante fue actualizado con exito";
+                message = "El profesor fue actualizado con exito";
             } else {
                 // Verificar existencia, y si existe guardar
                 if (gestion.exists(est))
-                    message = "No se puede crear porque ya existe un estudiante con esa ID";
+                    message = "No se puede crear porque ya existe un profesor con esa ID";
                 else {
                     gestion.create(est);
-                    message = "El estudiante se creo con exito";
+                    message = "El profesor se creo con exito";
                 }
             }
 
@@ -80,7 +80,7 @@ public class TeachersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GestorEstudiantes gestion = new GestorEstudiantes();
+        GestorProfesores gestion = new GestorProfesores();
         Boolean exist = false;
         String message = "";
         // Configura el tipo de contenido de la respuesta
@@ -97,11 +97,11 @@ public class TeachersServlet extends HttpServlet {
         try {
             // Verificar existencia, y si existe, mandar datos
             if (gestion.exists(id)) {
-                EstudianteDTO est = gestion.get(id);
+                ProfesorDTO est = gestion.get(id);
                 jsonResponse.put("nombre", est.getNombre());
                 jsonResponse.put("edad", est.getEdad());
                 jsonResponse.put("facultad", est.getFacultad());
-                jsonResponse.put("promedio", est.getPromedio());
+                jsonResponse.put("promedio", est.getPuntosSalariales());
                 exist = true;
             } else {
                 exist = false;
@@ -119,7 +119,7 @@ public class TeachersServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GestorEstudiantes gestion = new GestorEstudiantes();
+        GestorProfesores gestion = new GestorProfesores();
         String message = "";
         // Configura el tipo de contenido de la respuesta
         response.setContentType("application/json");
@@ -134,7 +134,7 @@ public class TeachersServlet extends HttpServlet {
 
         try {
             gestion.delete(id);
-            message = "El estudiante ha sido eliminado con existo";
+            message = "El profesor ha sido eliminado con existo";
         } catch (Exception e) {
             message = e.getMessage();
         }
