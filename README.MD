@@ -13,5 +13,5 @@ Para ver y usar las funcionalidades del proyecto, recomendamos el uso de Apache 
 Para desplegarlo, dirigirse a http://localhost:8080/manager/html/, (Cambiar 8080 si esta en otro puerto), dirigirse a la seccion deslplegar y elegir el .war del proyecto, ubicado en la carpeta target del projecto. Otra opcion, si tiene installado Maven en el path del sistema, usar el comando mvn tomcat9:deploy para desplegar (Solo funciona si tiene, user:admin, password:admin como credenciales para entrar al manager, en caso contrario cambiar en el pom.xml, o en tomcat, en la carpeta conf, en el archivo tomcat-users.xml)
 
 ## PARTICIPANTES
-    - 'NAHIN JOSE PEÑARANDA MEJIA 20231020032'
-    - 'ALEJANDRO MAURICIO JUNCO OVIEDO 20231020129'
+    - NAHIN JOSE PEÑARANDA MEJIA 20231020032
+    - ALEJANDRO MAURICIO JUNCO OVIEDO 20231020129
