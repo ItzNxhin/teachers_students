@@ -15,3 +15,9 @@ Para desplegarlo, dirigirse a http://localhost:8080/manager/html/, (Cambiar 8080
 ## PARTICIPANTES
 - NAHIN JOSE PEÑARANDA MEJIA 20231020032
 - ALEJANDRO MAURICIO JUNCO OVIEDO 20231020129
+
+## ESTRUCTURA DE ARCHIVOS
+- backend: Carpeta del proyecto 
+- diagrama: Digrama de clases
+- frontend: HTML, CSS y Javascript del proyecto
+- data: Archivos binarios en caso de ser necesario
