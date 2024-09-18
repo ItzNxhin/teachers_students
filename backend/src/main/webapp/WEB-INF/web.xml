@@ -8,5 +8,9 @@
         <servlet-name>StudentServlet</servlet-name>
         <servlet-class>pack.controller.StudentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TeachersServlet</servlet-name>
+        <servlet-class>pack.controller.TeachersServlet</servlet-class>
+    </servlet>
 
 </web-app>
