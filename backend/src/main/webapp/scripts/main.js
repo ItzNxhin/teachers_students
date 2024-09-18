@@ -283,7 +283,6 @@ document.getElementById('form-crear-profesor').addEventListener('submit', functi
         .then(response => response.json()) // Esperamos la respuesta en formato JSON
         .then(data => alert(data.message))
         .catch(error => console.error('Error:', error));
-    e.preventDefault();
     this.reset();
 });
 
@@ -348,7 +347,6 @@ document.getElementById('form-actualizar-profesor').addEventListener('submit', f
         .then(response => response.json()) // Esperamos la respuesta en formato JSON
         .then(data => alert(data.message))
         .catch(error => console.error('Error:', error));
-    alert('Profesor actualizado con éxito.');
     this.reset();
 });
 
