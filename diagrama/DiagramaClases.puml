@@ -1,0 +1,231 @@
+@startuml
+skinparam linetype ortho
+package pack.controller {
+
+    class GestorID {
+        -EstudentDAO gE
+        -TeacherDAO gT
+        +GestorID()
+        +exists(estdto: EstudianteDTO): boolean
+        +exists(estdto: ProfesorDTO): boolean
+        +exists(id: String): boolean
+    }
+
+    class GestorEstudiantes {
+        - EstudentDAO gE
+        --
+        + GestorEstudiantes()
+        + boolean exists(EstudianteDTO estdto) throws IOException
+        + boolean exists(String id) throws IOException
+        + void create(EstudianteDTO estdto) throws IOException
+        + EstudianteDTO get(String id)
+        + void edit(EstudianteDTO estdto) throws IOException
+        + void delete(String id) throws IOException
+    }
+
+    class GestorProfesores {
+        - TeacherDAO gT
+        --
+        + GestorProfesores()
+        + boolean exists(ProfesorDTO prfdto) throws IOException
+        + boolean exists(String id) throws IOException
+        + void create(ProfesorDTO prfdto) throws IOException
+        + ProfesorDTO get(String id)
+        + void edit(ProfesorDTO prfdto) throws IOException
+        + void delete(String id) throws IOException
+    }
+
+    class StudentServlet {
+        +doPost(request: HttpServletRequest, response: HttpServletResponse): void
+        +doGet(request: HttpServletRequest, response: HttpServletResponse): void
+        +doDelete(request: HttpServletRequest, response: HttpServletResponse): void
+    }
+
+
+
+    class TeachersServlet {
+        +doPost(request: HttpServletRequest, response: HttpServletResponse): void
+        +doGet(request: HttpServletRequest, response: HttpServletResponse): void
+        +doDelete(request: HttpServletRequest, response: HttpServletResponse): void
+    }
+
+}
+
+
+package pack.model.persistence {
+    class Archive {
+        - ObjectInputStream in
+        - ObjectOutputStream out
+        - File fE
+        - File fP
+        --
+        + Archive()
+        + ArrayList<Estudiante> leerEstudiantes() throws IOException, ClassNotFoundException
+        + ArrayList<Profesor> leerProfesores() throws IOException, ClassNotFoundException
+        + void guardarEstudiantes(ArrayList<Estudiante> x) throws IOException
+        + void guardarProfesores(ArrayList<Profesor> x) throws IOException
+        + File getfE()
+        + void setfE(File fE)
+        + File getfP()
+        + void setfP(File fP)
+    }
+
+    class EstudentDAO {
+        - ArrayList<Estudiante> list
+        - Archive aR
+        --
+        + EstudentDAO() throws IOException, ClassNotFoundException
+        + void actualizar() throws IOException, ClassNotFoundException
+        + ArrayList<String> read()
+        + boolean create(Estudiante x) throws IOException
+        + boolean delete(String x) throws IOException
+        + boolean update(Estudiante x, Estudiante y) throws IOException
+        + boolean find(Estudiante x)
+        + Estudiante findID(String id)
+        + ArrayList<String> ids()
+        - void rWrite() throws IOException
+    }
+
+    class EstudianteDTO {
+        - String nombre
+        - String id
+        - int edad
+        - String facultad
+        - float promedio
+        --
+        + float getPromedio()
+        + void setPromedio(float promedio)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getId()
+        + void setId(String id)
+        + int getEdad()
+        + void setEdad(int edad)
+        + String getFacultad()
+        + void setFacultad(String facultad)
+    }
+
+    interface InterfaceDao<Type> {
+        + ArrayList<String> read()
+        + boolean create(Type x) throws IOException
+        + boolean delete(String x) throws IOException
+        + boolean find(Type x)
+        + boolean update(Type x, Type y) throws IOException
+        + Type findID(String id)
+    }
+
+    class TeacherDAO {
+        - ArrayList<Profesor> list
+        - Archive aR
+        --
+        + TeacherDAO() throws IOException, ClassNotFoundException
+        + void actualizar() throws IOException, ClassNotFoundException
+        + ArrayList<String> read()
+        + boolean create(Profesor x) throws IOException
+        + boolean delete(String x) throws IOException
+        + boolean update(Profesor x, Profesor y) throws IOException
+        + boolean find(Profesor x)
+        + Profesor findID(String id)
+        + ArrayList<String> ids()
+        - void rWrite() throws IOException
+    }
+
+
+    class MapHandler {
+        + static EstudianteDTO estudianteToDTO(Estudiante x)
+        + static Estudiante dTOToEstudiante(EstudianteDTO x)
+        + static ProfesorDTO profesorToDTO(Profesor x)
+        + static Profesor dTOToProfesor(ProfesorDTO x)
+        + static ArrayList<EstudianteDTO> eststoDTO(ArrayList<Estudiante> x)
+        + static ArrayList<Estudiante> dtoeststoEST(ArrayList<EstudianteDTO> x)
+        + static ArrayList<ProfesorDTO> prftoDTO(ArrayList<Profesor> x)
+        + static ArrayList<Profesor> dtoeststoPRF(ArrayList<ProfesorDTO> x)
+    }
+
+
+    class ProfesorDTO {
+        - String nombre
+        - String id
+        - int edad
+        - String facultad
+        - int puntosSalariales
+        --
+        + int getPuntosSalariales()
+        + void setPuntosSalariales(int puntosSalariales)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getId()
+        + void setId(String id)
+        + int getEdad()
+        + void setEdad(int edad)
+        + String getFacultad()
+        + void setFacultad(String facultad)
+    }
+
+
+}
+
+package pack.model {
+    class Persona {
+        - String nombre
+        - String id
+        - int edad
+        - String facultad
+        --
+        + Persona()
+        + Persona(String nombre, String id, int edad, String facultad)
+        + String getNombre()
+        + void setNombre(String nombre)
+        + String getId()
+        + void setId(String id)
+        + int getEdad()
+        + void setEdad(int edad)
+        + String getFacultad()
+        + void setFacultad(String facultad)
+    }
+
+    class Estudiante {
+        - float promedio
+        --
+        + Estudiante()
+        + Estudiante(String nombre, String id, int edad, String facultad, float promedio)
+        + float getPromedio()
+        + void setPromedio(float promedio)
+        + String toString()
+    }
+
+    class Profesor {
+        - int puntosSalariales
+        --
+        + Profesor()
+        + Profesor(String nombre, String id, int edad, String facultad, int puntosSalariales)
+        + int getPuntosSalariales()
+        + void setPuntosSalariales(int puntosSalariales)
+        + String toString()
+    }
+
+    Estudiante -|> Persona
+    Profesor -|> Persona
+    TeacherDAO..>InterfaceDao
+    EstudentDAO..>InterfaceDao
+    TeacherDAO-->Archive
+    EstudentDAO-->Archive
+    Archive-->MapHandler
+    MapHandler-->ProfesorDTO
+    MapHandler-->EstudianteDTO
+
+    ProfesorDTO-->Profesor
+    TeacherDAO-->Profesor
+    EstudentDAO-->Estudiante
+    EstudianteDTO-->Estudiante
+
+    StudentServlet-->GestorID
+    TeachersServlet-->GestorID
+
+    TeachersServlet-->GestorProfesores
+    StudentServlet-->GestorEstudiantes
+
+    GestorEstudiantes-->ProfesorDTO
+    GestorProfesores-->EstudianteDTO
+}
+@enduml
