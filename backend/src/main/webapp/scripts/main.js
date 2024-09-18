@@ -263,47 +263,91 @@ document.addEventListener('DOMContentLoaded', function () {
 // Menú de crear profesor
 document.getElementById('form-crear-profesor').addEventListener('submit', function (e) {
     e.preventDefault();
-    // agregar la lógica para enviar los datos del formulario
-    console.log('Profesor creado:', {
+    let profesor = {
+        edit: false,
         nombre: this.nombre.value,
-        facultad: this.facultad.value,
-        puntosSalariales: this['puntos-salariales'].value,
+        id: this.id.value,
         edad: this.edad.value,
-        id: this.id.value
-    });
-    alert('Profesor creado con éxito.');
+        facultad: this.facultad.value,
+        puntos: this['puntos-salariales'].value,
+
+    }
+    console.log('hola')
+    fetch('http://localhost:8080/backend/api/controllerProfesores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(profesor) // Convertimos el objeto a JSON
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => alert(data.message))
+        .catch(error => console.error('Error:', error));
+    e.preventDefault();
     this.reset();
 });
 
 // Formulario de actualizar profesor
 document.getElementById('form-buscar-profesor-actualizar').addEventListener('submit', function (e) {
     e.preventDefault();
-    const profesorId = this.id.value;
+    const profesorId = this.querySelector('input').value;
     console.log('Buscar profesor con ID:', profesorId);
-    // Ejemplo de datos para actualizar
-    const datosProfesor = {
-        nombre: 'Ana López',
-        facultad: 'Matemáticas',
-        puntosSalariales: 5000,
-        edad: 35
-    };
-    document.getElementById('input-nombre-profesor-actualizar').value = datosProfesor.nombre;
-    document.getElementById('input-facultad-profesor-actualizar').value = datosProfesor.facultad;
-    document.getElementById('input-puntos-salariales-profesor-actualizar').value = datosProfesor.puntosSalariales;
-    document.getElementById('input-edad-profesor-actualizar').value = datosProfesor.edad;
-    document.getElementById('form-actualizar-profesor').style.display = 'block';
-    document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
+
+    fetch(`http://localhost:8080/backend/api/controllerProfesores?id=${profesorId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => {
+            if (!data.exist) {
+                this.reset();
+                alert("Profesor no existe")
+                document.getElementById('form-actualizar-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
+            }
+            else {
+                const datosProfesor = {
+                    nombre: data.nombre,
+                    facultad: data.facultad,
+                    edad: data.edad,
+                    puntosSalariales: data.puntos
+                };
+                document.getElementById('input-nombre-profesor-actualizar').value = datosProfesor.nombre;
+                document.getElementById('input-facultad-profesor-actualizar').value = datosProfesor.facultad;
+                document.getElementById('input-puntos-salariales-profesor-actualizar').value = datosProfesor.puntosSalariales;
+                document.getElementById('input-edad-profesor-actualizar').value = datosProfesor.edad;
+                document.getElementById('form-actualizar-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
 });
 
 document.getElementById('form-actualizar-profesor').addEventListener('submit', function (e) {
     e.preventDefault();
-    // agregar la lógica para actualizar los datos del profesor
-    console.log('Profesor actualizado:', {
+    let profesor = {
+        edit: true,
         nombre: this.nombre.value,
+        id: document.getElementById('form-buscar-profesor-actualizar').querySelector('input').value,
+        edad: this.edad.value,
         facultad: this.facultad.value,
-        puntosSalariales: this['puntos-salariales'].value,
-        edad: this.edad.value
-    });
+        puntos: this['puntos-salariales'].value
+
+    }
+    console.log('hola')
+    fetch('http://localhost:8080/backend/api/controllerProfesores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(profesor) // Convertimos el objeto a JSON
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => alert(data.message))
+        .catch(error => console.error('Error:', error));
     alert('Profesor actualizado con éxito.');
     this.reset();
 });
@@ -312,44 +356,95 @@ document.getElementById('form-actualizar-profesor').addEventListener('submit', f
 document.getElementById('form-buscar-profesor-datos').addEventListener('submit', function (e) {
     e.preventDefault();
     const profesorId = this.querySelector('input').value;
-    console.log('Buscar profesor con ID:', profesorId);
-    // Ejemplo de datos encontrados
-    const datosProfesor = {
-        nombre: 'Ana López',
-        facultad: 'Matemáticas',
-        puntosSalariales: 5000,
-        edad: 35
-    };
-    document.getElementById('resultado-nombre-profesor').textContent = `Nombre: ${datosProfesor.nombre}`;
-    document.getElementById('resultado-facultad-profesor').textContent = `Facultad: ${datosProfesor.facultad}`;
-    document.getElementById('resultado-puntos-salariales-profesor').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
-    document.getElementById('resultado-edad-profesor').textContent = `Edad: ${datosProfesor.edad}`;
-    document.getElementById('resultado-busqueda-profesor').style.display = 'block';
-    document.getElementById('mensaje-error-buscar-profesor').style.display = 'none';
+    console.log('Buscar estudiante con ID:', profesorId);
+
+    fetch(`http://localhost:8080/backend/api/controllerProfesores?id=${profesorId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => {
+            if (!data.exist) {
+                alert("Profesor no existe")
+                document.getElementById('resultado-busqueda-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-buscar-profesor').style.display = 'none';
+            }
+            else {
+                const datosProfesor = {
+                    nombre: data.nombre,
+                    facultad: data.facultad,
+                    edad: data.edad,
+                    puntosSalariales: data.puntos
+                };
+                document.getElementById('resultado-nombre-profesor').textContent = `Nombre: ${datosProfesor.nombre}`;
+                document.getElementById('resultado-facultad-profesor').textContent = `Facultad: ${datosProfesor.facultad}`;
+                document.getElementById('resultado-puntos-salariales-profesor').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
+                document.getElementById('resultado-edad-profesor').textContent = `Edad: ${datosProfesor.edad}`;
+                document.getElementById('resultado-busqueda-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-buscar-profesor').style.display = 'none';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+
 });
 
 // Formulario de borrar profesor
 document.getElementById('form-buscar-profesor-borrar').addEventListener('submit', function (e) {
     e.preventDefault();
-    const profesorId = this.id.value;
-    console.log('Buscar profesor para borrar con ID:', profesorId);
-    // Ejemplo de datos para confirmar borrado
-    const datosProfesor = {
-        nombre: 'Ana López',
-        facultad: 'Matemáticas',
-        puntosSalariales: 5000,
-        edad: 35
-    };
-    document.getElementById('detalle-nombre-profesor-borrar').textContent = `Nombre: ${datosProfesor.nombre}`;
-    document.getElementById('detalle-facultad-profesor-borrar').textContent = `Facultad: ${datosProfesor.facultad}`;
-    document.getElementById('detalle-puntos-salariales-profesor-borrar').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
-    document.getElementById('detalle-edad-profesor-borrar').textContent = `Edad: ${datosProfesor.edad}`;
-    document.getElementById('detalles-profesor').style.display = 'block';
-    document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
-});
+    const profesorId = this.querySelector('input').value;
+    console.log('Buscar profesor con ID:', profesorId);
 
-document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function () {
-    // agregar la lógica para borrar el profesor
+    fetch(`http://localhost:8080/backend/api/controllerProfesores?id=${profesorId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => {
+            if (!data.exist) {
+                alert("Profesor no existe")
+                document.getElementById('detalles-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
+            }
+            else {
+                const datosProfesor = {
+                    nombre: data.nombre,
+                    facultad: data.facultad,
+                    edad: data.edad,
+                    puntosSalariales: data.puntos
+                };
+                document.getElementById('detalle-nombre-profesor-borrar').textContent = `Nombre: ${datosProfesor.nombre}`;
+                document.getElementById('detalle-facultad-profesor-borrar').textContent = `Facultad: ${datosProfesor.facultad}`;
+                document.getElementById('detalle-puntos-salariales-profesor-borrar').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
+                document.getElementById('detalle-edad-profesor-borrar').textContent = `Edad: ${datosProfesor.edad}`;
+                document.getElementById('detalles-profesor').style.display = 'block';
+                document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
+            }
+
+
+        });
+})
+document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function (e) {
+    e.preventDefault();
+    const profesorId = document.getElementById('form-buscar-profesor-borrar').querySelector('input').value;
+    console.log('Buscar profesor con ID:', profesorId);
+
+    fetch(`http://localhost:8080/backend/api/controllerProfesores?id=${profesorId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json()) // Esperamos la respuesta en formato JSON
+        .then(data => {
+            alert(data.message)
+        })
+
+    ocultarTodosLosFormularios();
     alert('Profesor borrado con éxito.');
     ocultarTodosLosFormularios();
 });

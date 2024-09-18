@@ -20,6 +20,7 @@ public class TeachersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         GestorProfesores gestion = new GestorProfesores();
+        GestorID existencia = new GestorID();
         String message = "";
         // Configura el tipo de contenido de la respuesta
         response.setContentType("application/json");
@@ -58,7 +59,7 @@ public class TeachersServlet extends HttpServlet {
                 message = "El profesor fue actualizado con exito";
             } else {
                 // Verificar existencia, y si existe guardar
-                if (gestion.exists(est))
+                if (existencia.exists(est))
                     message = "No se puede crear porque ya existe un profesor con esa ID";
                 else {
                     gestion.create(est);
@@ -101,7 +102,7 @@ public class TeachersServlet extends HttpServlet {
                 jsonResponse.put("nombre", est.getNombre());
                 jsonResponse.put("edad", est.getEdad());
                 jsonResponse.put("facultad", est.getFacultad());
-                jsonResponse.put("promedio", est.getPuntosSalariales());
+                jsonResponse.put("puntos", est.getPuntosSalariales());
                 exist = true;
             } else {
                 exist = false;
