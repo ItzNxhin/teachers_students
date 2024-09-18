@@ -79,14 +79,14 @@
         </plugin>
         <plugin>
             <groupId>org.opoo.maven</groupId>
-            <artifactId>tomcat9-maven-plugin</artifactId> <!-- Usa tomcat7 o tomcat9 según tu versión de Tomcat -->
+            <artifactId>tomcat9-maven-plugin</artifactId> 
             <version>3.0.1</version>
             <configuration>
-                <url>http://localhost:8080/manager/text</url> <!-- Asegúrate de que la URL sea la correcta para Tomcat -->
+                <url>http://localhost:8080/manager/text</url> 
                 <server>TomcatServer</server>
-                <username>admin</username> <!-- Configura el usuario del Manager de Tomcat -->
-                <password>admin</password> <!-- Configura la contraseña del Manager de Tomcat -->
-                <path>/backend</path> <!-- Ruta donde será desplegada la aplicación -->
+                <username>admin</username> 
+                <password>admin</password>
+                <path>/backend</path>
             </configuration>
         </plugin>
       </plugins>
