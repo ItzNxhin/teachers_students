@@ -15,8 +15,8 @@ public class Archive {
     
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private File fE = new File("Data/estudentes.dat");
-    private File fP = new File("Data/teachers.dat");
+    private File fE = new File("estudentes.dat");
+    private File fP = new File("teachers.dat");
 
     public Archive(){
         if(!fE.exists()) {

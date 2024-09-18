@@ -7,6 +7,9 @@ public class Profesor extends Persona{
 
     private int puntosSalariales;
 
+    public Profesor() {
+    }
+
     public Profesor(int i, String string, String string2){
 
     }
@@ -15,7 +18,7 @@ public class Profesor extends Persona{
         super(nombre, id, edad, facultad);
         this.puntosSalariales = psalarios;
     }
-
+    
     public int getPuntosSalariales() {
         return puntosSalariales;
     }
