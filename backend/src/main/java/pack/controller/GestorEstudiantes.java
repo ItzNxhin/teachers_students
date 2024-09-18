@@ -49,4 +49,8 @@ public class GestorEstudiantes  {
         gE.update(oldE, newE);
     }
 
+    public void delete(String id) throws IOException{
+        gE.delete(id);
+    }
+
 }

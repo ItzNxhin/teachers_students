@@ -115,4 +115,31 @@ public class StudentServlet extends HttpServlet {
         jsonResponse.put("message", message);
         out.print(jsonResponse.toString());
     }
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        GestorEstudiantes gestion = new GestorEstudiantes();
+        String message = "";
+        // Configura el tipo de contenido de la respuesta
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        // Obtener el parámetro 'id' de la URL
+        String id = request.getParameter("id");
+
+        // Procesa el JSON y prepara la respuesta
+        PrintWriter out = response.getWriter();
+        JSONObject jsonResponse = new JSONObject();
+
+        try {
+            gestion.delete(id);
+            message = "El estudiante ha sido eliminado con existo";
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+
+        jsonResponse.put("status", "success");
+        jsonResponse.put("message", message);
+        out.print(jsonResponse.toString());
+    }
 }

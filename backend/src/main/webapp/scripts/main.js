@@ -240,103 +240,117 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    document.getElementById('btn-confirmar-borrar-estudiante').addEventListener('click', function () {
-        // Aquí toca agregar la lógica para borrar el estudiante
-        alert('Estudiante borrado con éxito.');
-        ocultarTodosLosFormularios();
-    });
-
-    // Menú de crear profesor
-    document.getElementById('form-crear-profesor').addEventListener('submit', function (e) {
+    document.getElementById('btn-confirmar-borrar-estudiante').addEventListener('click', function (e) {
         e.preventDefault();
-        // agregar la lógica para enviar los datos del formulario
-        console.log('Profesor creado:', {
-            nombre: this.nombre.value,
-            facultad: this.facultad.value,
-            puntosSalariales: this['puntos-salariales'].value,
-            edad: this.edad.value,
-            id: this.id.value
-        });
-        alert('Profesor creado con éxito.');
-        this.reset();
-    });
+        const estudianteId = document.getElementById('form-buscar-estudiante-borrar').querySelector('input').value;
+        console.log('Buscar estudiante con ID:', estudianteId);
 
-    // Formulario de actualizar profesor
-    document.getElementById('form-buscar-profesor-actualizar').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const profesorId = this.id.value;
-        console.log('Buscar profesor con ID:', profesorId);
-        // Ejemplo de datos para actualizar
-        const datosProfesor = {
-            nombre: 'Ana López',
-            facultad: 'Matemáticas',
-            puntosSalariales: 5000,
-            edad: 35
-        };
-        document.getElementById('input-nombre-profesor-actualizar').value = datosProfesor.nombre;
-        document.getElementById('input-facultad-profesor-actualizar').value = datosProfesor.facultad;
-        document.getElementById('input-puntos-salariales-profesor-actualizar').value = datosProfesor.puntosSalariales;
-        document.getElementById('input-edad-profesor-actualizar').value = datosProfesor.edad;
-        document.getElementById('form-actualizar-profesor').style.display = 'block';
-        document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
-    });
+        fetch(`http://localhost:8080/backend/api/controllerEstudiantes?id=${estudianteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json()) // Esperamos la respuesta en formato JSON
+            .then(data => {
+                alert(data.message)
+            })
+    })
 
-    document.getElementById('form-actualizar-profesor').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // agregar la lógica para actualizar los datos del profesor
-        console.log('Profesor actualizado:', {
-            nombre: this.nombre.value,
-            facultad: this.facultad.value,
-            puntosSalariales: this['puntos-salariales'].value,
-            edad: this.edad.value
-        });
-        alert('Profesor actualizado con éxito.');
-        this.reset();
-    });
-
-    // Formulario de buscar profesor
-    document.getElementById('form-buscar-profesor-datos').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const profesorId = this.querySelector('input').value;
-        console.log('Buscar profesor con ID:', profesorId);
-        // Ejemplo de datos encontrados
-        const datosProfesor = {
-            nombre: 'Ana López',
-            facultad: 'Matemáticas',
-            puntosSalariales: 5000,
-            edad: 35
-        };
-        document.getElementById('resultado-nombre-profesor').textContent = `Nombre: ${datosProfesor.nombre}`;
-        document.getElementById('resultado-facultad-profesor').textContent = `Facultad: ${datosProfesor.facultad}`;
-        document.getElementById('resultado-puntos-salariales-profesor').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
-        document.getElementById('resultado-edad-profesor').textContent = `Edad: ${datosProfesor.edad}`;
-        document.getElementById('resultado-busqueda-profesor').style.display = 'block';
-        document.getElementById('mensaje-error-buscar-profesor').style.display = 'none';
-    });
-
-    // Formulario de borrar profesor
-    document.getElementById('form-buscar-profesor-borrar').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const profesorId = this.id.value;
-        console.log('Buscar profesor para borrar con ID:', profesorId);
-        // Ejemplo de datos para confirmar borrado
-        const datosProfesor = {
-            nombre: 'Ana López',
-            facultad: 'Matemáticas',
-            puntosSalariales: 5000,
-            edad: 35
-        };
-        document.getElementById('detalle-nombre-profesor-borrar').textContent = `Nombre: ${datosProfesor.nombre}`;
-        document.getElementById('detalle-facultad-profesor-borrar').textContent = `Facultad: ${datosProfesor.facultad}`;
-        document.getElementById('detalle-puntos-salariales-profesor-borrar').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
-        document.getElementById('detalle-edad-profesor-borrar').textContent = `Edad: ${datosProfesor.edad}`;
-        document.getElementById('detalles-profesor').style.display = 'block';
-        document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
-    });
-
-    document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function () {
-        // agregar la lógica para borrar el profesor
-        alert('Profesor borrado con éxito.');
-        ocultarTodosLosFormularios();
-    });
+    ocultarTodosLosFormularios();
 });
+
+// Menú de crear profesor
+document.getElementById('form-crear-profesor').addEventListener('submit', function (e) {
+    e.preventDefault();
+    // agregar la lógica para enviar los datos del formulario
+    console.log('Profesor creado:', {
+        nombre: this.nombre.value,
+        facultad: this.facultad.value,
+        puntosSalariales: this['puntos-salariales'].value,
+        edad: this.edad.value,
+        id: this.id.value
+    });
+    alert('Profesor creado con éxito.');
+    this.reset();
+});
+
+// Formulario de actualizar profesor
+document.getElementById('form-buscar-profesor-actualizar').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const profesorId = this.id.value;
+    console.log('Buscar profesor con ID:', profesorId);
+    // Ejemplo de datos para actualizar
+    const datosProfesor = {
+        nombre: 'Ana López',
+        facultad: 'Matemáticas',
+        puntosSalariales: 5000,
+        edad: 35
+    };
+    document.getElementById('input-nombre-profesor-actualizar').value = datosProfesor.nombre;
+    document.getElementById('input-facultad-profesor-actualizar').value = datosProfesor.facultad;
+    document.getElementById('input-puntos-salariales-profesor-actualizar').value = datosProfesor.puntosSalariales;
+    document.getElementById('input-edad-profesor-actualizar').value = datosProfesor.edad;
+    document.getElementById('form-actualizar-profesor').style.display = 'block';
+    document.getElementById('mensaje-error-profesor-actualizar').style.display = 'none';
+});
+
+document.getElementById('form-actualizar-profesor').addEventListener('submit', function (e) {
+    e.preventDefault();
+    // agregar la lógica para actualizar los datos del profesor
+    console.log('Profesor actualizado:', {
+        nombre: this.nombre.value,
+        facultad: this.facultad.value,
+        puntosSalariales: this['puntos-salariales'].value,
+        edad: this.edad.value
+    });
+    alert('Profesor actualizado con éxito.');
+    this.reset();
+});
+
+// Formulario de buscar profesor
+document.getElementById('form-buscar-profesor-datos').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const profesorId = this.querySelector('input').value;
+    console.log('Buscar profesor con ID:', profesorId);
+    // Ejemplo de datos encontrados
+    const datosProfesor = {
+        nombre: 'Ana López',
+        facultad: 'Matemáticas',
+        puntosSalariales: 5000,
+        edad: 35
+    };
+    document.getElementById('resultado-nombre-profesor').textContent = `Nombre: ${datosProfesor.nombre}`;
+    document.getElementById('resultado-facultad-profesor').textContent = `Facultad: ${datosProfesor.facultad}`;
+    document.getElementById('resultado-puntos-salariales-profesor').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
+    document.getElementById('resultado-edad-profesor').textContent = `Edad: ${datosProfesor.edad}`;
+    document.getElementById('resultado-busqueda-profesor').style.display = 'block';
+    document.getElementById('mensaje-error-buscar-profesor').style.display = 'none';
+});
+
+// Formulario de borrar profesor
+document.getElementById('form-buscar-profesor-borrar').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const profesorId = this.id.value;
+    console.log('Buscar profesor para borrar con ID:', profesorId);
+    // Ejemplo de datos para confirmar borrado
+    const datosProfesor = {
+        nombre: 'Ana López',
+        facultad: 'Matemáticas',
+        puntosSalariales: 5000,
+        edad: 35
+    };
+    document.getElementById('detalle-nombre-profesor-borrar').textContent = `Nombre: ${datosProfesor.nombre}`;
+    document.getElementById('detalle-facultad-profesor-borrar').textContent = `Facultad: ${datosProfesor.facultad}`;
+    document.getElementById('detalle-puntos-salariales-profesor-borrar').textContent = `Puntos Salariales: ${datosProfesor.puntosSalariales}`;
+    document.getElementById('detalle-edad-profesor-borrar').textContent = `Edad: ${datosProfesor.edad}`;
+    document.getElementById('detalles-profesor').style.display = 'block';
+    document.getElementById('mensaje-error-borrar-profesor').style.display = 'none';
+});
+
+document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click', function () {
+    // agregar la lógica para borrar el profesor
+    alert('Profesor borrado con éxito.');
+    ocultarTodosLosFormularios();
+});
+
