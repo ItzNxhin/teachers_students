@@ -445,7 +445,5 @@ document.getElementById('btn-confirmar-borrar-profesor').addEventListener('click
         })
 
     ocultarTodosLosFormularios();
-    alert('Profesor borrado con éxito.');
-    ocultarTodosLosFormularios();
 });
 
